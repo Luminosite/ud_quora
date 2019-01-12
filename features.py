@@ -177,6 +177,8 @@ logger = getLogger()
 
 def gen_feature(n=0, data_file="train.csv", start=0):
     tag = data_file.split('.')[0]
+    if(n>0):
+        tag = "{t}_{start}_{end}".format(t=tag, start=start, end=n)
     operations = [
         ("basic_feature_{t}".format(t=tag), base_feature_with_size(n, data_file, start))
         ,("wmd_feature_{t}".format(t=tag), wmd_feature)
