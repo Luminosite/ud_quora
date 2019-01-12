@@ -1,6 +1,7 @@
 *.csv
 */*.csv
 */*.gz
+*/*.pkl
 .ipynb_checkpoints/
 .DS_Store
 __pycache__/

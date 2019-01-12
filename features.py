@@ -73,28 +73,32 @@ def norm_wmd(s1, s2, norm_model):
     s2 = [w for w in s2 if w not in stop_words]
     return norm_model.wmdistance(s1, s2)
 
+def base_feature_with_size(n, data_file, start):
+    def basic_feature():
+        data = pd.read_csv('data/{f}'.format(f=data_file), sep=',')
+        if n > 0:
+            data = data[start:n]
+        if data_file != "test.csv":
+            data = data.drop(['id', 'qid1', 'qid2'], axis=1)
+        logger.debug("basic data is ready")
 
-def basic_feature():
-    data = pd.read_csv('data/train.csv', sep=',')[:10000]
-    data = data.drop(['id', 'qid1', 'qid2'], axis=1)
-    logger.debug("basic data is ready")
-
-    data['len_q1'] = data.question1.apply(lambda x: len(str(x)))
-    data['len_q2'] = data.question2.apply(lambda x: len(str(x)))
-    data['diff_len'] = data.len_q1 - data.len_q2
-    data['len_char_q1'] = data.question1.apply(lambda x: len(''.join(set(str(x).replace(' ', '')))))
-    data['len_char_q2'] = data.question2.apply(lambda x: len(''.join(set(str(x).replace(' ', '')))))
-    data['len_word_q1'] = data.question1.apply(lambda x: len(str(x).split()))
-    data['len_word_q2'] = data.question2.apply(lambda x: len(str(x).split()))
-    data['common_words'] = data.apply(lambda x: len(set(str(x['question1']).lower().split()).intersection(set(str(x['question2']).lower().split()))), axis=1)
-    data['fuzz_qratio'] = data.apply(lambda x: fuzz.QRatio(str(x['question1']), str(x['question2'])), axis=1)
-    data['fuzz_WRatio'] = data.apply(lambda x: fuzz.WRatio(str(x['question1']), str(x['question2'])), axis=1)
-    data['fuzz_partial_ratio'] = data.apply(lambda x: fuzz.partial_ratio(str(x['question1']), str(x['question2'])), axis=1)
-    data['fuzz_partial_token_set_ratio'] = data.apply(lambda x: fuzz.partial_token_set_ratio(str(x['question1']), str(x['question2'])), axis=1)
-    data['fuzz_partial_token_sort_ratio'] = data.apply(lambda x: fuzz.partial_token_sort_ratio(str(x['question1']), str(x['question2'])), axis=1)
-    data['fuzz_token_set_ratio'] = data.apply(lambda x: fuzz.token_set_ratio(str(x['question1']), str(x['question2'])), axis=1)
-    data['fuzz_token_sort_ratio'] = data.apply(lambda x: fuzz.token_sort_ratio(str(x['question1']), str(x['question2'])), axis=1)
-    return data
+        data['len_q1'] = data.question1.apply(lambda x: len(str(x)))
+        data['len_q2'] = data.question2.apply(lambda x: len(str(x)))
+        data['diff_len'] = data.len_q1 - data.len_q2
+        data['len_char_q1'] = data.question1.apply(lambda x: len(''.join(set(str(x).replace(' ', '')))))
+        data['len_char_q2'] = data.question2.apply(lambda x: len(''.join(set(str(x).replace(' ', '')))))
+        data['len_word_q1'] = data.question1.apply(lambda x: len(str(x).split()))
+        data['len_word_q2'] = data.question2.apply(lambda x: len(str(x).split()))
+        data['common_words'] = data.apply(lambda x: len(set(str(x['question1']).lower().split()).intersection(set(str(x['question2']).lower().split()))), axis=1)
+        data['fuzz_qratio'] = data.apply(lambda x: fuzz.QRatio(str(x['question1']), str(x['question2'])), axis=1)
+        data['fuzz_WRatio'] = data.apply(lambda x: fuzz.WRatio(str(x['question1']), str(x['question2'])), axis=1)
+        data['fuzz_partial_ratio'] = data.apply(lambda x: fuzz.partial_ratio(str(x['question1']), str(x['question2'])), axis=1)
+        data['fuzz_partial_token_set_ratio'] = data.apply(lambda x: fuzz.partial_token_set_ratio(str(x['question1']), str(x['question2'])), axis=1)
+        data['fuzz_partial_token_sort_ratio'] = data.apply(lambda x: fuzz.partial_token_sort_ratio(str(x['question1']), str(x['question2'])), axis=1)
+        data['fuzz_token_set_ratio'] = data.apply(lambda x: fuzz.token_set_ratio(str(x['question1']), str(x['question2'])), axis=1)
+        data['fuzz_token_sort_ratio'] = data.apply(lambda x: fuzz.token_sort_ratio(str(x['question1']), str(x['question2'])), axis=1)
+        return data
+    return basic_feature
 
 
 def wmd_feature(data):
@@ -171,13 +175,15 @@ def dist_features(data):
 
 logger = getLogger()
 
-operations = [
-    ("basic_feature", basic_feature)
-    ,("wmd_feature", wmd_feature)
-    ,("norm_wmd_feature", norm_wmd_feature)
-    ,("dist_features", dist_features)
-    #,("add_normal_wmd_feature", normal_wmd_feature)
-]
+def gen_feature(n=0, data_file="train.csv", start=0):
+    tag = data_file.split('.')[0]
+    operations = [
+        ("basic_feature_{t}".format(t=tag), base_feature_with_size(n, data_file, start))
+        ,("wmd_feature_{t}".format(t=tag), wmd_feature)
+        ,("norm_wmd_feature_{t}".format(t=tag), norm_wmd_feature)
+        ,("dist_features_{t}".format(t=tag), dist_features)
+        #,("add_normal_wmd_feature", normal_wmd_feature)
+    ]
 
-features_data = read_or_gen_by_list(operations)
-features_data.to_csv('data/quora_features.csv', index=False)
+    features_data = read_or_gen_by_list(operations)
+    return features_data
