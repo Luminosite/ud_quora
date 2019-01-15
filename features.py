@@ -29,7 +29,7 @@ import os
 def read_or_gen_by_list(l):
     current = len(l) - 1
     if current < 0:
-        logger.debug("Error: input list is empty")
+        print("Error: input list is empty")
         return None
     return r_or_g_by_list_n(l, current)
 
@@ -39,20 +39,20 @@ def r_or_g_by_list_n(l, i):
     func = l[i][1]
     path = "data/{name}.csv".format(name=name)
     if os.path.exists(path):
-        logger.debug("read the data for {name}".format(name=name))
+        print("read the data for {name}".format(name=name))
         d = pd.read_csv(path, sep=",")
-        logger.debug("data for {name} read".format(name=name))
+        print("data for {name} read".format(name=name))
         return d
     else:
         d = None
-        logger.debug("generate the data for {name}".format(name=name))
+        print("generate the data for {name}".format(name=name))
         if i == 0:
             d = func()
         else:
             parameter = r_or_g_by_list_n(l, i-1)
             d = func(parameter)
         d.to_csv(path, index=False)
-        logger.debug("data for {name} generated".format(name=name))
+        print("data for {name} generated".format(name=name))
         return d
 
 
@@ -80,7 +80,7 @@ def base_feature_with_size(n, data_file, start):
             data = data[start:n]
         if data_file != "test.csv":
             data = data.drop(['id', 'qid1', 'qid2'], axis=1)
-        logger.debug("basic data is ready")
+        print("basic data is ready")
 
         data['len_q1'] = data.question1.apply(lambda x: len(str(x)))
         data['len_q2'] = data.question2.apply(lambda x: len(str(x)))
@@ -172,8 +172,6 @@ def dist_features(data):
     
     return data
 
-
-logger = getLogger()
 
 def gen_feature(n=0, data_file="train.csv", start=0):
     tag = data_file.split('.')[0]
