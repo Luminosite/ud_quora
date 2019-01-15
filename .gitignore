@@ -1,5 +1,8 @@
 *.csv
 */*.csv
 */*.gz
+*/*.pkl
 .ipynb_checkpoints/
 *.docx
+.DS_Store
+__pycache__/
