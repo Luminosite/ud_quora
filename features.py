@@ -190,3 +190,36 @@ def gen_feature(n=0, data_file="train.csv", start=0):
 
     features_data = read_or_gen_by_list(operations)
     return features_data
+
+
+from math import log
+
+def gen_ratio(col, data):
+    data['{c}_ratio_ln'.format(c=col)] = data.apply(
+        lambda x: log(x['{c}1'.format(c=col)]/x['{c}2'.format(c=col)]),
+        axis=1)
+    return data
+
+
+def processed_features(data):
+    cols = ["len_q", "len_char_q", "len_word_q"]
+    for col in cols:
+        data = gen_ratio(col, data)
+    return data
+
+
+def gen_processed_feature(n=0, data_file="train.csv", start=0):
+    tag = data_file.split('.')[0]
+    if(n>0):
+        tag = "{t}_{start}_{end}".format(t=tag, start=start, end=n)
+    operations = [
+        ("basic_feature_{t}".format(t=tag), base_feature_with_size(n, data_file, start))
+        ,("wmd_feature_{t}".format(t=tag), wmd_feature)
+        ,("norm_wmd_feature_{t}".format(t=tag), norm_wmd_feature)
+        ,("dist_features_{t}".format(t=tag), dist_features)
+        ,("processed_features_{t}".format(t=tag), processed_features)
+        #,("add_normal_wmd_feature", normal_wmd_feature)
+    ]
+
+    features_data = read_or_gen_by_list(operations)
+    return features_data
