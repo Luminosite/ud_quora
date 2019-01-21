@@ -1,9 +1,9 @@
+*.zip
 *.csv
 */*.csv
 */*.gz
 */*.pkl
 */*.pyc
 .ipynb_checkpoints/
-*.docx
 .DS_Store
 __pycache__/
