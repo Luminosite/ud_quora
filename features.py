@@ -1,4 +1,4 @@
-
+from math import log
 import _pickle as cPickle
 import pandas as pd
 import numpy as np
@@ -192,8 +192,6 @@ def gen_feature(n=0, data_file="train.csv", start=0):
     return features_data
 
 
-from math import log
-
 def gen_ratio(col, data):
     data['{c}_ratio_ln'.format(c=col)] = data.apply(
         lambda x: log(x['{c}1'.format(c=col)]/x['{c}2'.format(c=col)]),
@@ -201,24 +199,26 @@ def gen_ratio(col, data):
     return data
 
 
-def processed_features(data):
+def common_ratio_feature(data):
+    data['common_ratio'] = data.apply(lambda x: 2 * float(x['common_words']) /
+                                                (float(x['len_word_q1']) + float(x['len_word_q2'])),
+                                      axis=1)
     cols = ["len_q", "len_char_q", "len_word_q"]
     for col in cols:
         data = gen_ratio(col, data)
     return data
 
 
-def gen_processed_feature(n=0, data_file="train.csv", start=0):
+def gen_common_ratio_feature(n=0, data_file="train.csv", start=0):
     tag = data_file.split('.')[0]
-    if(n>0):
+    if n > 0:
         tag = "{t}_{start}_{end}".format(t=tag, start=start, end=n)
     operations = [
         ("basic_feature_{t}".format(t=tag), base_feature_with_size(n, data_file, start))
-        ,("wmd_feature_{t}".format(t=tag), wmd_feature)
-        ,("norm_wmd_feature_{t}".format(t=tag), norm_wmd_feature)
-        ,("dist_features_{t}".format(t=tag), dist_features)
-        ,("processed_features_{t}".format(t=tag), processed_features)
-        #,("add_normal_wmd_feature", normal_wmd_feature)
+        , ("wmd_feature_{t}".format(t=tag), wmd_feature)
+        , ("norm_wmd_feature_{t}".format(t=tag), norm_wmd_feature)
+        , ("dist_features_{t}".format(t=tag), dist_features)
+        , ("common_ratio_features_{t}".format(t=tag), common_ratio_feature)
     ]
 
     features_data = read_or_gen_by_list(operations)
