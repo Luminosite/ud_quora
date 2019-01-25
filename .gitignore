@@ -3,6 +3,7 @@
 */*.csv
 */*.gz
 */*.pkl
+*.pkl
 */*.pyc
 .idea/
 .ipynb_checkpoints/
