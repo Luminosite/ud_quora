@@ -209,6 +209,30 @@ def common_ratio_feature(data):
     return data
 
 
+def dist_features_for(data, q1, q2, tag="tfidf"):
+    q1 = np.nan_to_num(q1)
+    q2 = np.nan_to_num(q2)
+
+    def add_dist_for(func):
+        col_name = '{d}_distance_{t}'.format(d=func.__name__, t=tag)
+        data[col_name] = [func(x, y)  for (x, y) in zip(q1, q2)]
+
+    add_dist_for(cosine)
+    add_dist_for(cityblock)
+    add_dist_for(jaccard)
+    add_dist_for(canberra)
+    add_dist_for(euclidean)
+    add_dist_for(minkowski)
+    add_dist_for(braycurtis)
+
+    data['skew_q1vec_{t}'.format(t=tag)] = [skew(x) for x in q1]
+    data['skew_q2vec_{t}'.format(t=tag)] = [skew(x) for x in q2]
+    data['kur_q1vec_{t}'.format(t=tag)] = [kurtosis(x) for x in q1]
+    data['kur_q2vec_{t}'.format(t=tag)] = [kurtosis(x) for x in q2]
+
+    return data
+
+
 def gen_common_ratio_feature(n=0, data_file="train.csv", start=0):
     tag = data_file.split('.')[0]
     if n > 0:
@@ -223,3 +247,5 @@ def gen_common_ratio_feature(n=0, data_file="train.csv", start=0):
 
     features_data = read_or_gen_by_list(operations)
     return features_data
+
+
