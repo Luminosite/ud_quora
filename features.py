@@ -9,6 +9,14 @@ from tqdm import tqdm
 from scipy.stats import skew, kurtosis
 from scipy.spatial.distance import cosine, cityblock, jaccard, canberra, euclidean, minkowski, braycurtis
 from nltk import word_tokenize
+
+from sklearn.decomposition import LatentDirichletAllocation
+from sklearn.decomposition import TruncatedSVD
+from sklearn.decomposition import NMF
+from sklearn.decomposition import PCA
+from sklearn.feature_extraction import text
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 stop_words = stopwords.words('english')
 
 
@@ -233,7 +241,52 @@ def dist_features_for(data, q1, q2, tag="tfidf"):
     return data
 
 
-def gen_common_ratio_feature(n=0, data_file="train.csv", start=0):
+def tfidf_gen(t_data):
+    ft = ['question1', "question2"]
+    train = t_data.loc[:, ft]
+    
+    print('Generate tfidf')
+    feats= ft
+    vect_orig = TfidfVectorizer(max_features=None,ngram_range=(1, 1), min_df=3)
+
+    corpus = []
+    for f in feats:
+        train.loc[:, f] = train.loc[:, f].astype(str)
+        corpus+=train[f].values.tolist()
+    vect_orig.fit(corpus)
+    
+    train_tfidf = vect_orig.transform(corpus)
+    return train_tfidf
+
+
+def prepare_vec_dist_data(data, vec, tag="tag"):
+    single_set_size = int(vec.shape[0]/2)
+    q1 = vec[:single_set_size]
+    q2 = vec[single_set_size:]
+    
+    dist_features_data = dist_features_for(data, q1, q2, tag=tag)
+    return dist_features_data
+
+
+def transfered_dist_feature(data):
+    tfidf = tfidf_gen(data)
+    ms = [
+          (TruncatedSVD, [300]),
+          (NMF, [30])
+         ]
+    
+    for model_func, n_list in ms:
+        for n in n_list:
+            tag = "%s_%d" % (model_func.__name__, n)
+            print("transfer sparse vec for %s" % tag)
+            model = model_func(n_components=n)
+            transfered = model.fit_transform(tfidf)
+            print("prepare features for %s" % tag)
+            data = prepare_vec_dist_data(data, transfered, tag=tag)
+    return data
+
+
+def gen_transfered_dist_feature(n=0, data_file="train.csv", start=0):
     tag = data_file.split('.')[0]
     if n > 0:
         tag = "{t}_{start}_{end}".format(t=tag, start=start, end=n)
@@ -243,6 +296,7 @@ def gen_common_ratio_feature(n=0, data_file="train.csv", start=0):
         , ("norm_wmd_feature_{t}".format(t=tag), norm_wmd_feature)
         , ("dist_features_{t}".format(t=tag), dist_features)
         , ("common_ratio_features_{t}".format(t=tag), common_ratio_feature)
+        , ("transfered_dist_features_{t}".format(t=tag), transfered_dist_feature)
     ]
 
     features_data = read_or_gen_by_list(operations)
