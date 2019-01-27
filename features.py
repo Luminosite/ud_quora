@@ -5,6 +5,7 @@ import numpy as np
 import gensim
 from fuzzywuzzy import fuzz
 from nltk.corpus import stopwords
+import nltk
 from tqdm import tqdm
 from scipy.stats import skew, kurtosis
 from scipy.spatial.distance import cosine, cityblock, jaccard, canberra, euclidean, minkowski, braycurtis
@@ -18,6 +19,17 @@ from sklearn.feature_extraction import text
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 stop_words = stopwords.words('english')
+from time import time
+
+
+def time_cnt(f, tag="func"):
+    print("function '%s' starts" % tag)
+    t_start = time()
+    ret = f()
+    t_end = time()
+    t_used = t_end - t_start
+    print("function '%s' use: %f s" % (tag, t_used))
+    return ret
 
 
 def getLogger():
@@ -84,6 +96,32 @@ def norm_wmd(s1, s2, norm_model):
     return norm_model.wmdistance(s1, s2)
 
 
+def lemmatize_all(sentence):
+    wnl = nltk.WordNetLemmatizer()
+    for word, tag in nltk.pos_tag(nltk.word_tokenize(sentence)):
+        if tag.startswith('NN'):
+            yield wnl.lemmatize(word, pos='n')
+        elif tag.startswith('VB'):
+            yield wnl.lemmatize(word, pos='v')
+        elif tag.startswith('JJ'):
+            yield wnl.lemmatize(word, pos='a')
+        elif tag.startswith('R'):
+            yield wnl.lemmatize(word, pos='r')
+        else:
+            yield word
+
+def rebuild_sentence(s):
+    sentence = str(s).lower()
+    return ' '.join(lemmatize_all(sentence))
+
+
+def rebuild_question(data):
+    feats = ["question%d" % x for x in range(1, 3)]
+    for f in feats:
+        data[f] = data[f].apply(lambda x: rebuild_sentence(x))
+    return data
+
+
 def base_feature_with_size(n, data_file, start):
     def basic_feature():
         data = pd.read_csv('data/{f}'.format(f=data_file), sep=',')
@@ -92,6 +130,8 @@ def base_feature_with_size(n, data_file, start):
         if data_file != "test.csv":
             data = data.drop(['id', 'qid1', 'qid2'], axis=1)
         print("basic data is ready")
+        
+        data = time_cnt(lambda: rebuild_question(data), tag="clean question string")
 
         data['len_q1'] = data.question1.apply(lambda x: len(str(x)))
         data['len_q2'] = data.question2.apply(lambda x: len(str(x)))
@@ -259,21 +299,37 @@ def tfidf_gen(t_data):
     return train_tfidf
 
 
+def attach_vec_directly(data, q1, q2, tag):
+    width = int(q1.shape[1])
+    shortTag = tag.replace(' ', '')
+    cols = [["q{i}_{s}_{sub_num}".format(i=i, s=shortTag, sub_num=x) for x in range(width)] for i in range(1,3)]
+    print("to attach cols:", cols)
+    dq1 = pd.DataFrame(q1, columns=cols[0])
+    dq2 = pd.DataFrame(q2, columns=cols[1])
+    return pd.concat([data, dq1, dq2], axis=1)
+
+
 def prepare_vec_dist_data(data, vec, tag="tag"):
     single_set_size = int(vec.shape[0]/2)
     q1 = vec[:single_set_size]
     q2 = vec[single_set_size:]
     
-    dist_features_data = dist_features_for(data, q1, q2, tag=tag)
-    return dist_features_data
+    dist_features_data = data
+    if (q1.shape[1] >28 ):
+        dist_features_data = dist_features_for(data, q1, q2, tag=tag)
+    
+    attached = dist_features_data
+    if (q1.shape[1] < 50):
+        attached = attach_vec_directly(dist_features_data, q1, q2, tag)
+    return attached
 
 
 def transfered_dist_feature(data):
     tfidf = tfidf_gen(data)
     ms = [
-          (TruncatedSVD, [300]),
+          (TruncatedSVD, [300, 25]),
           (NMF, [30])
-         ]
+        ]
     
     for model_func, n_list in ms:
         for n in n_list:
@@ -302,4 +358,19 @@ def gen_transfered_dist_feature(n=0, data_file="train.csv", start=0):
     features_data = read_or_gen_by_list(operations)
     return features_data
 
+
+def gen_common_ratio_feature(n=0, data_file="train.csv", start=0):
+    tag = data_file.split('.')[0]
+    if n > 0:
+        tag = "{t}_{start}_{end}".format(t=tag, start=start, end=n)
+    operations = [
+        ("basic_feature_{t}".format(t=tag), base_feature_with_size(n, data_file, start))
+        , ("wmd_feature_{t}".format(t=tag), wmd_feature)
+        , ("norm_wmd_feature_{t}".format(t=tag), norm_wmd_feature)
+        , ("dist_features_{t}".format(t=tag), dist_features)
+        , ("common_ratio_features_{t}".format(t=tag), common_ratio_feature)
+    ]
+
+    features_data = read_or_gen_by_list(operations)
+    return features_data
 
