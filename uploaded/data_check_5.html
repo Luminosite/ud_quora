@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>test_data_process</title>
+<title>data_check_5</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13115,63 +13115,294 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">_pickle</span> <span class="k">as</span> <span class="nn">pk</span>
-<span class="n">clf</span> <span class="o">=</span> <span class="n">pk</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;gbdt.pickle&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">features</span> <span class="k">as</span> <span class="nn">ft</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">gen_transfered_dist_feature</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>S:\anaconda\envs\tf\lib\site-packages\gensim\utils.py:1197: UserWarning: detected Windows; aliasing chunkize to chunkize_serial
+  warnings.warn(&#34;detected Windows; aliasing chunkize to chunkize_serial&#34;)
+S:\anaconda\envs\tf\lib\site-packages\fuzzywuzzy\fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+  warnings.warn(&#39;Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning&#39;)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>generate the data for transfered_dist_features_train
+generate the data for common_ratio_features_train
+generate the data for dist_features_train
+generate the data for norm_wmd_feature_train
+generate the data for wmd_feature_train
+generate the data for basic_feature_train
+basic data is ready
+function &#39;clean question string&#39; starts
+function &#39;clean question string&#39; use: 1755.320536 s
+data for basic_feature_train generated
+data for wmd_feature_train generated
+data for norm_wmd_feature_train generated
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>291it [00:00, 2881.19it/s]E:\quora\ud_quora\features.py:180: RuntimeWarning: invalid value encountered in double_scalars
+  return v / np.sqrt((v ** 2).sum())
+404290it [01:49, 3678.08it/s]
+404290it [01:52, 3591.05it/s]
+S:\anaconda\envs\tf\lib\site-packages\scipy\spatial\distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+S:\anaconda\envs\tf\lib\site-packages\scipy\spatial\distance.py:1160: RuntimeWarning: invalid value encountered in double_scalars
+  return l1_diff.sum() / l1_sum.sum()
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>data for dist_features_train generated
+data for common_ratio_features_train generated
+Generate tfidf
+transfer sparse vec for TruncatedSVD_300
+prepare features for TruncatedSVD_300
+transfer sparse vec for TruncatedSVD_25
+prepare features for TruncatedSVD_25
+to attach cols: [[&#39;q1_TruncatedSVD_25_0&#39;, &#39;q1_TruncatedSVD_25_1&#39;, &#39;q1_TruncatedSVD_25_2&#39;, &#39;q1_TruncatedSVD_25_3&#39;, &#39;q1_TruncatedSVD_25_4&#39;, &#39;q1_TruncatedSVD_25_5&#39;, &#39;q1_TruncatedSVD_25_6&#39;, &#39;q1_TruncatedSVD_25_7&#39;, &#39;q1_TruncatedSVD_25_8&#39;, &#39;q1_TruncatedSVD_25_9&#39;, &#39;q1_TruncatedSVD_25_10&#39;, &#39;q1_TruncatedSVD_25_11&#39;, &#39;q1_TruncatedSVD_25_12&#39;, &#39;q1_TruncatedSVD_25_13&#39;, &#39;q1_TruncatedSVD_25_14&#39;, &#39;q1_TruncatedSVD_25_15&#39;, &#39;q1_TruncatedSVD_25_16&#39;, &#39;q1_TruncatedSVD_25_17&#39;, &#39;q1_TruncatedSVD_25_18&#39;, &#39;q1_TruncatedSVD_25_19&#39;, &#39;q1_TruncatedSVD_25_20&#39;, &#39;q1_TruncatedSVD_25_21&#39;, &#39;q1_TruncatedSVD_25_22&#39;, &#39;q1_TruncatedSVD_25_23&#39;, &#39;q1_TruncatedSVD_25_24&#39;], [&#39;q2_TruncatedSVD_25_0&#39;, &#39;q2_TruncatedSVD_25_1&#39;, &#39;q2_TruncatedSVD_25_2&#39;, &#39;q2_TruncatedSVD_25_3&#39;, &#39;q2_TruncatedSVD_25_4&#39;, &#39;q2_TruncatedSVD_25_5&#39;, &#39;q2_TruncatedSVD_25_6&#39;, &#39;q2_TruncatedSVD_25_7&#39;, &#39;q2_TruncatedSVD_25_8&#39;, &#39;q2_TruncatedSVD_25_9&#39;, &#39;q2_TruncatedSVD_25_10&#39;, &#39;q2_TruncatedSVD_25_11&#39;, &#39;q2_TruncatedSVD_25_12&#39;, &#39;q2_TruncatedSVD_25_13&#39;, &#39;q2_TruncatedSVD_25_14&#39;, &#39;q2_TruncatedSVD_25_15&#39;, &#39;q2_TruncatedSVD_25_16&#39;, &#39;q2_TruncatedSVD_25_17&#39;, &#39;q2_TruncatedSVD_25_18&#39;, &#39;q2_TruncatedSVD_25_19&#39;, &#39;q2_TruncatedSVD_25_20&#39;, &#39;q2_TruncatedSVD_25_21&#39;, &#39;q2_TruncatedSVD_25_22&#39;, &#39;q2_TruncatedSVD_25_23&#39;, &#39;q2_TruncatedSVD_25_24&#39;]]
+transfer sparse vec for NMF_30
+prepare features for NMF_30
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>S:\anaconda\envs\tf\lib\site-packages\scipy\spatial\distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>to attach cols: [[&#39;q1_NMF_30_0&#39;, &#39;q1_NMF_30_1&#39;, &#39;q1_NMF_30_2&#39;, &#39;q1_NMF_30_3&#39;, &#39;q1_NMF_30_4&#39;, &#39;q1_NMF_30_5&#39;, &#39;q1_NMF_30_6&#39;, &#39;q1_NMF_30_7&#39;, &#39;q1_NMF_30_8&#39;, &#39;q1_NMF_30_9&#39;, &#39;q1_NMF_30_10&#39;, &#39;q1_NMF_30_11&#39;, &#39;q1_NMF_30_12&#39;, &#39;q1_NMF_30_13&#39;, &#39;q1_NMF_30_14&#39;, &#39;q1_NMF_30_15&#39;, &#39;q1_NMF_30_16&#39;, &#39;q1_NMF_30_17&#39;, &#39;q1_NMF_30_18&#39;, &#39;q1_NMF_30_19&#39;, &#39;q1_NMF_30_20&#39;, &#39;q1_NMF_30_21&#39;, &#39;q1_NMF_30_22&#39;, &#39;q1_NMF_30_23&#39;, &#39;q1_NMF_30_24&#39;, &#39;q1_NMF_30_25&#39;, &#39;q1_NMF_30_26&#39;, &#39;q1_NMF_30_27&#39;, &#39;q1_NMF_30_28&#39;, &#39;q1_NMF_30_29&#39;], [&#39;q2_NMF_30_0&#39;, &#39;q2_NMF_30_1&#39;, &#39;q2_NMF_30_2&#39;, &#39;q2_NMF_30_3&#39;, &#39;q2_NMF_30_4&#39;, &#39;q2_NMF_30_5&#39;, &#39;q2_NMF_30_6&#39;, &#39;q2_NMF_30_7&#39;, &#39;q2_NMF_30_8&#39;, &#39;q2_NMF_30_9&#39;, &#39;q2_NMF_30_10&#39;, &#39;q2_NMF_30_11&#39;, &#39;q2_NMF_30_12&#39;, &#39;q2_NMF_30_13&#39;, &#39;q2_NMF_30_14&#39;, &#39;q2_NMF_30_15&#39;, &#39;q2_NMF_30_16&#39;, &#39;q2_NMF_30_17&#39;, &#39;q2_NMF_30_18&#39;, &#39;q2_NMF_30_19&#39;, &#39;q2_NMF_30_20&#39;, &#39;q2_NMF_30_21&#39;, &#39;q2_NMF_30_22&#39;, &#39;q2_NMF_30_23&#39;, &#39;q2_NMF_30_24&#39;, &#39;q2_NMF_30_25&#39;, &#39;q2_NMF_30_26&#39;, &#39;q2_NMF_30_27&#39;, &#39;q2_NMF_30_28&#39;, &#39;q2_NMF_30_29&#39;]]
+data for transfered_dist_features_train generated
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
 
-<span class="n">test_ranges</span> <span class="o">=</span> <span class="p">[</span>
-      <span class="p">(</span><span class="mi">0</span><span class="p">,</span>        <span class="mi">270000</span><span class="p">)</span>
-     <span class="p">,(</span><span class="mi">270000</span><span class="p">,</span>   <span class="mi">540000</span><span class="p">)</span>
-     <span class="p">,(</span><span class="mi">540000</span><span class="p">,</span>   <span class="mi">810000</span><span class="p">)</span>
-     <span class="p">,(</span><span class="mi">810000</span><span class="p">,</span>  <span class="mi">1800000</span><span class="p">)</span>
-<span class="c1">#     ,(1800000,  2700000)</span>
-    <span class="p">,(</span><span class="mi">2700000</span><span class="p">,</span>  <span class="mi">3563475</span><span class="p">)</span>
-<span class="p">]</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">SGDClassifier</span><span class="p">,</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="k">import</span> <span class="n">XGBClassifier</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMClassifier</span>
 
-<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;test_id&#39;</span><span class="p">,</span> <span class="s1">&#39;len_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_q2&#39;</span><span class="p">,</span> <span class="s1">&#39;diff_len&#39;</span><span class="p">,</span> <span class="s1">&#39;len_char_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_char_q2&#39;</span><span class="p">,</span> <span class="s1">&#39;len_word_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_word_q2&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;common_words&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_qratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_WRatio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_partial_ratio&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;fuzz_partial_token_set_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_partial_token_sort_ratio&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;fuzz_token_set_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_token_sort_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;wmd&#39;</span><span class="p">,</span> <span class="s1">&#39;norm_wmd&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;cosine_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;cityblock_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;jaccard_distance&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;canberra_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;euclidean_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;minkowski_distance&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;braycurtis_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;skew_q1vec&#39;</span><span class="p">,</span> <span class="s1">&#39;skew_q2vec&#39;</span><span class="p">,</span> <span class="s1">&#39;kur_q1vec&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;kur_q2vec&#39;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">log_loss</span>
 
-<span class="n">model_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;len_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_q2&#39;</span><span class="p">,</span> <span class="s1">&#39;diff_len&#39;</span><span class="p">,</span> <span class="s1">&#39;len_char_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_char_q2&#39;</span><span class="p">,</span> <span class="s1">&#39;len_word_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_word_q2&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;common_words&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_qratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_WRatio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_partial_ratio&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;fuzz_partial_token_set_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_partial_token_sort_ratio&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;fuzz_token_set_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_token_sort_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;wmd&#39;</span><span class="p">,</span> <span class="s1">&#39;norm_wmd&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;cosine_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;cityblock_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;jaccard_distance&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;canberra_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;euclidean_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;minkowski_distance&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;braycurtis_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;skew_q1vec&#39;</span><span class="p">,</span> <span class="s1">&#39;skew_q2vec&#39;</span><span class="p">,</span> <span class="s1">&#39;kur_q1vec&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;kur_q2vec&#39;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurtosis</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="k">import</span> <span class="n">cosine</span><span class="p">,</span> <span class="n">cityblock</span><span class="p">,</span> <span class="n">jaccard</span><span class="p">,</span> <span class="n">canberra</span><span class="p">,</span> <span class="n">euclidean</span><span class="p">,</span> <span class="n">minkowski</span><span class="p">,</span> <span class="n">braycurtis</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction</span> <span class="k">import</span> <span class="n">text</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="k">import</span> <span class="n">TfidfVectorizer</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">rand_number</span> <span class="o">=</span> <span class="n">seed</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">prepare_test_data</span><span class="p">(</span><span class="n">data_tuple</span><span class="p">):</span>
-    <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">data_tuple</span>
-    <span class="n">t_data</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">gen_feature</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">data_file</span><span class="o">=</span><span class="s2">&quot;test.csv&quot;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">LatentDirichletAllocation</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">TruncatedSVD</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">NMF</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">PCA</span>
+
+
+<span class="k">def</span> <span class="nf">one_hot</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="n">oc</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+    <span class="n">y_r</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">oc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">y_r</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">oc</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y_r</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">r</span>
+
+
+<span class="k">def</span> <span class="nf">get_log_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="n">y_p</span> <span class="o">=</span> <span class="n">one_hot</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">log_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_p</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">time_cnt</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;func&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;function &#39;</span><span class="si">%s</span><span class="s2">&#39; starts&quot;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">f</span><span class="p">()</span>
+    <span class="n">t_end</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">t_used</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;function &#39;</span><span class="si">%s</span><span class="s2">&#39; use: </span><span class="si">%f</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">t_used</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+
+<span class="k">def</span> <span class="nf">prepare_train_set</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">features</span><span class="p">):</span>
+    <span class="n">t_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">!=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">feature_data</span> <span class="o">=</span> <span class="n">t_data</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">feature_data</span><span class="p">[</span><span class="n">features</span><span class="p">]</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">feature_data</span><span class="p">[[</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]]</span>
+    <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                                                        <span class="n">stratify</span> <span class="o">=</span> <span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span>
+
+
+<span class="k">def</span> <span class="nf">dist_features_for</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">q1</span><span class="p">,</span> <span class="n">q2</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;tfidf&quot;</span><span class="p">):</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">q1</span><span class="p">)</span>
+    <span class="n">q2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">q2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_dist_for</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="n">col_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{d}</span><span class="s1">_distance_</span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="n">q2</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">col_name</span>
+
+    <span class="n">feats</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">add_dist_for</span><span class="p">(</span><span class="n">cosine</span><span class="p">))</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">add_dist_for</span><span class="p">(</span><span class="n">cityblock</span><span class="p">))</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">add_dist_for</span><span class="p">(</span><span class="n">jaccard</span><span class="p">))</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">add_dist_for</span><span class="p">(</span><span class="n">canberra</span><span class="p">))</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">add_dist_for</span><span class="p">(</span><span class="n">euclidean</span><span class="p">))</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">add_dist_for</span><span class="p">(</span><span class="n">minkowski</span><span class="p">))</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">add_dist_for</span><span class="p">(</span><span class="n">braycurtis</span><span class="p">))</span>
+
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;skew_q1vec_</span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tag</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">skew</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">q1</span><span class="p">]</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s1">&#39;skew_q1vec_</span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tag</span><span class="p">))</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;skew_q2vec_</span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tag</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">skew</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">q2</span><span class="p">]</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s1">&#39;skew_q2vec_</span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tag</span><span class="p">))</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;kur_q1vec_</span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tag</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">kurtosis</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">q1</span><span class="p">]</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s1">&#39;kur_q1vec_</span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tag</span><span class="p">))</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;kur_q2vec_</span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tag</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">kurtosis</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">q2</span><span class="p">]</span>
+    <span class="n">feats</span> <span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s1">&#39;kur_q2vec_</span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tag</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">feats</span>
+
+
+<span class="k">def</span> <span class="nf">prepare_vec_dist_train_set</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">vec_gen</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;tag&quot;</span><span class="p">):</span>
+    <span class="n">vec</span> <span class="o">=</span> <span class="n">time_cnt</span><span class="p">(</span><span class="n">vec_gen</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;vec gen for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="n">single_set_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[:</span><span class="n">single_set_size</span><span class="p">]</span>
+    <span class="n">q2</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="n">single_set_size</span><span class="p">:]</span>
     
-    <span class="n">feature_data</span> <span class="o">=</span> <span class="n">t_data</span>
-    <span class="n">input_data</span> <span class="o">=</span> <span class="n">feature_data</span><span class="p">[</span><span class="n">model_features</span><span class="p">]</span>
-    <span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-    <span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;test_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_data</span><span class="p">[</span><span class="s1">&#39;test_id&#39;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">input_data</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dist features for </span><span class="si">%s</span><span class="s2"> starts to gen&quot;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="n">dist_features_data</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">dist_features_for</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">q1</span><span class="p">,</span> <span class="n">q2</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train sets for </span><span class="si">%s</span><span class="s2"> starts to gen&quot;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">prepare_train_set</span><span class="p">(</span><span class="n">dist_features_data</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span>
+
+
+<span class="k">def</span> <span class="nf">test_data_performace_with_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">features</span><span class="p">):</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">prepare_train_set</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">test_perform_for</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test_perform_for</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">rf_clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">rand_number</span><span class="p">)</span>
+    <span class="n">gbdt_clf</span> <span class="o">=</span> <span class="n">GradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">rand_number</span><span class="p">)</span>
+    <span class="n">lr_clf</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">rand_number</span><span class="p">)</span>
+    <span class="n">sgd_clf</span> <span class="o">=</span> <span class="n">SGDClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">rand_number</span><span class="p">)</span>
+    <span class="n">xgb_clf</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">rand_number</span><span class="p">)</span>
+    <span class="n">lgb_clf</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">rand_number</span><span class="p">)</span>
+<span class="c1">#     models=[(rf_clf, &quot;RandomForest&quot;), (gbdt_clf, &quot;GBDT&quot;), (lr_clf, &quot;LogsitcRegression&quot;), (sgd_clf, &quot;SGD&quot;), </span>
+<span class="c1">#             (xgb_clf, &quot;XGBoost&quot;)] , (lgb_clf, &quot;lightGBM&quot;)]</span>
+    <span class="n">models</span><span class="o">=</span><span class="p">[(</span><span class="n">xgb_clf</span><span class="p">,</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">lgb_clf</span><span class="p">,</span> <span class="s2">&quot;lightGBM&quot;</span><span class="p">)]</span>
+
+    <span class="n">perform</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">t</span>
+        <span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+        <span class="n">t_end</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="n">y_predprob</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;training time cost:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">t_end</span><span class="o">-</span><span class="n">t_start</span><span class="p">))</span>
+        <span class="n">y_t</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_log_loss</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_predprob</span><span class="p">),</span> <span class="n">get_log_loss</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_t</span><span class="p">)]</span>
+        <span class="n">perform</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">res</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">perform</span>
+
+
+<span class="k">def</span> <span class="nf">tfidf</span><span class="p">():</span>
+    <span class="n">ft</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span> <span class="s2">&quot;question2&quot;</span><span class="p">]</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">t_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">ft</span><span class="p">]</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Generate tfidf&#39;</span><span class="p">)</span>
+    <span class="n">feats</span><span class="o">=</span> <span class="n">ft</span>
+    <span class="n">vect_orig</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feats</span><span class="p">:</span>
+        <span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="n">corpus</span><span class="o">+=</span><span class="n">train</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">vect_orig</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+    
+    <span class="n">train_tfidf</span> <span class="o">=</span> <span class="n">vect_orig</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">train_tfidf</span>
+
+
+<span class="k">def</span> <span class="nf">try_n_for_transfer</span><span class="p">(</span><span class="n">transfer</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;svd300&quot;</span><span class="p">):</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">prepare_vec_dist_train_set</span><span class="p">(</span>
+        <span class="n">t_data</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">transfer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">ti</span><span class="p">),</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+    <span class="n">performance</span> <span class="o">=</span> <span class="n">test_perform_for</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> performance:&quot;</span><span class="o">%</span><span class="k">tag</span>, performance)
+    
+
+
+<span class="n">features</span><span class="o">=</span><span class="p">[</span> <span class="s1">&#39;cosine_distance_pca300&#39;</span><span class="p">,</span> <span class="s1">&#39;cityblock_distance_pca300&#39;</span><span class="p">,</span> <span class="s1">&#39;jaccard_distance_pca300&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;canberra_distance_pca300&#39;</span><span class="p">,</span> <span class="s1">&#39;euclidean_distance_pca300&#39;</span><span class="p">,</span> <span class="s1">&#39;minkowski_distance_pca300&#39;</span><span class="p">,</span> <span class="s1">&#39;braycurtis_distance_pca300&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;skew_q1vec_pca300&#39;</span><span class="p">,</span> <span class="s1">&#39;skew_q2vec_pca300&#39;</span><span class="p">,</span> <span class="s1">&#39;kur_q1vec_pca300&#39;</span><span class="p">,</span> <span class="s1">&#39;kur_q2vec_pca300&#39;</span><span class="p">]</span>
+<span class="n">target_col</span> <span class="o">=</span> <span class="s2">&quot;is_duplicate&quot;</span>
 </pre></div>
 
     </div>
@@ -13181,16 +13412,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">cal_result</span><span class="p">(</span><span class="nb">tuple</span><span class="p">):</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">prepare_test_data</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">model_features</span><span class="p">])</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;test_id&#39;</span><span class="p">,</span> <span class="s1">&#39;is_duplicate&#39;</span><span class="p">]]</span>
-    <span class="k">return</span> <span class="n">result</span>
-
-<span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">cal_result</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">test_ranges</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ti</span> <span class="o">=</span> <span class="n">tfidf</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13207,18 +13432,692 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>read the data for dist_features_test_0_270000
-data for dist_features_test_0_270000 read
-read the data for dist_features_test_270000_540000
-data for dist_features_test_270000_540000 read
-read the data for dist_features_test_540000_810000
-data for dist_features_test_540000_810000 read
-read the data for dist_features_test_810000_1800000
-data for dist_features_test_810000_1800000 read
-read the data for dist_features_test_2700000_3563475
-data for dist_features_test_2700000_3563475 read
+<pre>Generate tfidf
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ms</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="n">TruncatedSVD</span><span class="p">,</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]),</span>
+      <span class="p">(</span><span class="n">NMF</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]),</span>
+      <span class="p">(</span><span class="n">LatentDirichletAllocation</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+     <span class="p">]</span>
+<span class="n">reports</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">model_func</span><span class="p">,</span> <span class="n">n_list</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">n_list</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">model_func</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model_func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">reports</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">try_n_for_transfer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;================= result =================&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">report</span> <span class="ow">in</span> <span class="n">reports</span><span class="p">:</span>
+    <span class="n">tags</span><span class="p">,</span> <span class="n">performances</span> <span class="o">=</span> <span class="n">report</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">performances</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>function &#39;vec gen for TruncatedSVD_50&#39;starts
+function &#39;vec gen for TruncatedSVD_50&#39; use: 0.780925 s
+dist features for TruncatedSVD_50 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for TruncatedSVD_50 starts to gen
+XGBoost training time cost: 0.9808001518249512
+function &#39;vec gen for TruncatedSVD_100&#39;starts
+function &#39;vec gen for TruncatedSVD_100&#39; use: 1.593821 s
+dist features for TruncatedSVD_100 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for TruncatedSVD_100 starts to gen
+XGBoost training time cost: 0.997204065322876
+function &#39;vec gen for TruncatedSVD_200&#39;starts
+function &#39;vec gen for TruncatedSVD_200&#39; use: 3.320833 s
+dist features for TruncatedSVD_200 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for TruncatedSVD_200 starts to gen
+XGBoost training time cost: 0.9678761959075928
+function &#39;vec gen for TruncatedSVD_300&#39;starts
+function &#39;vec gen for TruncatedSVD_300&#39; use: 5.459460 s
+dist features for TruncatedSVD_300 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for TruncatedSVD_300 starts to gen
+XGBoost training time cost: 0.9741940498352051
+function &#39;vec gen for NMF_10&#39;starts
+function &#39;vec gen for NMF_10&#39; use: 1.315125 s
+dist features for NMF_10 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for NMF_10 starts to gen
+XGBoost training time cost: 0.9557170867919922
+function &#39;vec gen for NMF_20&#39;starts
+function &#39;vec gen for NMF_20&#39; use: 8.124760 s
+dist features for NMF_20 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for NMF_20 starts to gen
+XGBoost training time cost: 0.9860780239105225
+function &#39;vec gen for NMF_30&#39;starts
+function &#39;vec gen for NMF_30&#39; use: 7.182917 s
+dist features for NMF_30 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for NMF_30 starts to gen
+XGBoost training time cost: 0.9736499786376953
+function &#39;vec gen for LatentDirichletAllocation_10&#39;starts
+function &#39;vec gen for LatentDirichletAllocation_10&#39; use: 67.426340 s
+dist features for LatentDirichletAllocation_10 starts to gen
+train sets for LatentDirichletAllocation_10 starts to gen
+XGBoost training time cost: 0.8143031597137451
+function &#39;vec gen for LatentDirichletAllocation_20&#39;starts
+function &#39;vec gen for LatentDirichletAllocation_20&#39; use: 63.568054 s
+dist features for LatentDirichletAllocation_20 starts to gen
+train sets for LatentDirichletAllocation_20 starts to gen
+XGBoost training time cost: 0.8660018444061279
+================= result =================
+TruncatedSVD_50 performance:	[(&#39;XGBoost&#39;, [10.379990387737232, 10.94262575153517])]
+TruncatedSVD_100 performance:	[(&#39;XGBoost&#39;, [10.09786930100949, 10.685990880489394])]
+TruncatedSVD_200 performance:	[(&#39;XGBoost&#39;, [9.924485101040071, 10.633894837227968])]
+TruncatedSVD_300 performance:	[(&#39;XGBoost&#39;, [9.742208778814193, 10.384440199625436])]
+NMF_10 performance:	[(&#39;XGBoost&#39;, [11.187939902510804, 11.883620278703015])]
+NMF_20 performance:	[(&#39;XGBoost&#39;, [10.719176449530027, 11.113715665565687])]
+NMF_30 performance:	[(&#39;XGBoost&#39;, [10.781559418557888, 11.135101904819502])]
+LatentDirichletAllocation_10 performance:	[(&#39;XGBoost&#39;, [11.445792972192395, 11.634114154075178])]
+LatentDirichletAllocation_20 performance:	[(&#39;XGBoost&#39;, [11.00307503115586, 11.539254400545003])]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ms</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="n">NMF</span><span class="p">,</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">])</span>
+     <span class="p">]</span>
+<span class="n">reports</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">model_func</span><span class="p">,</span> <span class="n">n_list</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">n_list</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">model_func</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model_func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">reports</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">try_n_for_transfer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;================= result =================&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">report</span> <span class="ow">in</span> <span class="n">reports</span><span class="p">:</span>
+    <span class="n">tags</span><span class="p">,</span> <span class="n">performances</span> <span class="o">=</span> <span class="n">report</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">performances</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>function &#39;vec gen for NMF_50&#39;starts
+function &#39;vec gen for NMF_50&#39; use: 19.773376 s
+dist features for NMF_50 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for NMF_50 starts to gen
+XGBoost training time cost: 0.9852018356323242
+function &#39;vec gen for NMF_100&#39;starts
+function &#39;vec gen for NMF_100&#39; use: 57.651311 s
+dist features for NMF_100 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for NMF_100 starts to gen
+XGBoost training time cost: 0.9566638469696045
+function &#39;vec gen for NMF_150&#39;starts
+function &#39;vec gen for NMF_150&#39; use: 165.686871 s
+dist features for NMF_150 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for NMF_150 starts to gen
+XGBoost training time cost: 1.10664701461792
+================= result =================
+NMF_50 performance:	[(&#39;XGBoost&#39;, [10.483362544757968, 10.721634612579086])]
+NMF_100 performance:	[(&#39;XGBoost&#39;, [10.387119502014524, 10.714505866161147])]
+NMF_150 performance:	[(&#39;XGBoost&#39;, [10.358603044905355, 10.693119626907333])]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">prepare_vec_dist_train_set</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">vec_gen</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;tag&quot;</span><span class="p">):</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="p">[</span>
+          <span class="p">(</span><span class="n">TruncatedSVD</span><span class="p">,</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]),</span>
+          <span class="p">(</span><span class="n">NMF</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]),</span>
+          <span class="p">(</span><span class="n">LatentDirichletAllocation</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+         <span class="p">]</span>
+    <span class="n">reports</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">model_func</span><span class="p">,</span> <span class="n">n_list</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">n_list</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_func</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model_func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">reports</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">try_n_for_transfer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">))</span>
+            
+    <span class="n">vec</span> <span class="o">=</span> <span class="n">time_cnt</span><span class="p">(</span><span class="n">vec_gen</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;vec gen for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="n">single_set_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[:</span><span class="n">single_set_size</span><span class="p">]</span>
+    <span class="n">q2</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="n">single_set_size</span><span class="p">:]</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dist features for </span><span class="si">%s</span><span class="s2"> starts to gen&quot;</span> <span class="o">%</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="n">dist_features_data</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">dist_features_for</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">q1</span><span class="p">,</span> <span class="n">q2</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>function &#39;vec gen for nmf100&#39;starts
+function &#39;vec gen for nmf100&#39; use: 89.899767 s
+dist features for nmf100 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/scipy/spatial/distance.py:702: RuntimeWarning: invalid value encountered in double_scalars
+  dist = 1.0 - uv / np.sqrt(uu * vv)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train sets for nmf100 starts to gen
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/sklearn/ensemble/forest.py:246: FutureWarning: The default value of n_estimators will change from 10 in version 0.20 to 100 in 0.22.
+  &#34;10 in version 0.20 to 100 in 0.22.&#34;, FutureWarning)
+/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/ipykernel_launcher.py:124: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>RandomForest training time cost: 0.5205888748168945
+[0.6379569677730905, 11.432149677556074]
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/sklearn/utils/validation.py:761: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>GBDT training time cost: 1.982990026473999
+[10.103955327579383, 10.69804031546862]
+LogsitcRegression training time cost: 0.08344411849975586
+[11.88595803085617, 11.93105895276114]
+SGD training time cost: 0.010377168655395508
+[12.898135566317384, 13.206841242214095]
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/sklearn/linear_model/logistic.py:433: FutureWarning: Default solver will be changed to &#39;lbfgs&#39; in 0.22. Specify a solver to silence this warning.
+  FutureWarning)
+/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/sklearn/utils/validation.py:761: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/sklearn/linear_model/stochastic_gradient.py:166: FutureWarning: max_iter and tol parameters have been added in SGDClassifier in 0.19. If both are left unset, they default to max_iter=5 and tol=None. If tol is not None, max_iter defaults to max_iter=1000. From 0.21, default max_iter will be 1000, and default tol will be 1e-3.
+  FutureWarning)
+/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/sklearn/utils/validation.py:761: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/sklearn/preprocessing/label.py:219: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+/Users/kunfu/miniconda2/envs/tf/lib/python3.5/site-packages/sklearn/preprocessing/label.py:252: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>XGBoost training time cost: 1.0862648487091064
+[10.246515543841523, 10.69804031546862]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">tfidf_for</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">ft</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span> <span class="s2">&quot;question2&quot;</span><span class="p">]</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">ft</span><span class="p">]</span>
+    
+    <span class="n">feats</span><span class="o">=</span> <span class="n">ft</span>
+    <span class="n">vect_orig</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feats</span><span class="p">:</span>
+        <span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="n">corpus</span><span class="o">+=</span><span class="n">train</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">vect_orig</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+    
+    <span class="n">train_tfidf</span> <span class="o">=</span> <span class="n">vect_orig</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">train_tfidf</span>
+
+
+
+<span class="k">def</span> <span class="nf">add_vec_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">transfer</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;svd300&quot;</span><span class="p">):</span>
+    <span class="n">ti</span> <span class="o">=</span> <span class="n">time_cnt</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">tfidf_for</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;generate tfidf&quot;</span><span class="p">)</span>
+    
+    <span class="n">vec</span> <span class="o">=</span> <span class="n">time_cnt</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">transfer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">ti</span><span class="p">),</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;transfer tfidf matrix&quot;</span><span class="p">)</span>
+    <span class="n">single_set_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[:</span><span class="n">single_set_size</span><span class="p">]</span>
+    <span class="n">q2</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="n">single_set_size</span><span class="p">:]</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">shortTag</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;q</span><span class="si">{i}</span><span class="s2">_</span><span class="si">{s}</span><span class="s2">_</span><span class="si">{sub_num}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">shortTag</span><span class="p">,</span> <span class="n">sub_num</span><span class="o">=</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+    <span class="n">dq1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">dq2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">q2</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">dq1</span><span class="p">,</span> <span class="n">dq2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">n</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">NMF</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">add_vec_features</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;nmf20&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>function &#39;generate tfidf&#39;starts
+function &#39;generate tfidf&#39; use: 1.600985 s
+function &#39;transfer tfidf matrix&#39;starts
+function &#39;transfer tfidf matrix&#39; use: 12.259087 s
+[[&#39;q1_nmf20_0&#39;, &#39;q1_nmf20_1&#39;, &#39;q1_nmf20_2&#39;, &#39;q1_nmf20_3&#39;, &#39;q1_nmf20_4&#39;, &#39;q1_nmf20_5&#39;, &#39;q1_nmf20_6&#39;, &#39;q1_nmf20_7&#39;, &#39;q1_nmf20_8&#39;, &#39;q1_nmf20_9&#39;, &#39;q1_nmf20_10&#39;, &#39;q1_nmf20_11&#39;, &#39;q1_nmf20_12&#39;, &#39;q1_nmf20_13&#39;, &#39;q1_nmf20_14&#39;, &#39;q1_nmf20_15&#39;, &#39;q1_nmf20_16&#39;, &#39;q1_nmf20_17&#39;, &#39;q1_nmf20_18&#39;, &#39;q1_nmf20_19&#39;], [&#39;q2_nmf20_0&#39;, &#39;q2_nmf20_1&#39;, &#39;q2_nmf20_2&#39;, &#39;q2_nmf20_3&#39;, &#39;q2_nmf20_4&#39;, &#39;q2_nmf20_5&#39;, &#39;q2_nmf20_6&#39;, &#39;q2_nmf20_7&#39;, &#39;q2_nmf20_8&#39;, &#39;q2_nmf20_9&#39;, &#39;q2_nmf20_10&#39;, &#39;q2_nmf20_11&#39;, &#39;q2_nmf20_12&#39;, &#39;q2_nmf20_13&#39;, &#39;q2_nmf20_14&#39;, &#39;q2_nmf20_15&#39;, &#39;q2_nmf20_16&#39;, &#39;q2_nmf20_17&#39;, &#39;q2_nmf20_18&#39;, &#39;q2_nmf20_19&#39;]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_data_performace_with_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">&#39;q1_nmf20_0&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_1&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_2&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;q1_nmf20_3&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_4&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_5&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_6&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_7&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;q1_nmf20_8&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_9&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_10&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_11&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_12&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;q1_nmf20_13&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_14&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_15&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_16&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;q1_nmf20_17&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_18&#39;</span><span class="p">,</span> <span class="s1">&#39;q1_nmf20_19&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_0&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_1&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;q2_nmf20_2&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_3&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_4&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_5&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_6&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;q2_nmf20_7&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_8&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_9&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_10&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_11&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;q2_nmf20_12&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_13&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_14&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_15&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;q2_nmf20_16&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_17&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_18&#39;</span><span class="p">,</span> <span class="s1">&#39;q2_nmf20_19&#39;</span>
+<span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>XGBoost training time cost: 5.134984493255615
+lightGBM training time cost: 1.6410515308380127
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[34]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;XGBoost&#39;, [10.065270578321838, 11.047276808112168]),
+ (&#39;lightGBM&#39;, [7.274510357774387, 10.327421996744858])]</pre>
+</div>
+
 </div>
 
 </div>
@@ -13230,7 +14129,8 @@ data for dist_features_test_2700000_3563475 read
 <div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">t_data</span><span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 </pre></div>
 
     </div>
@@ -13247,339 +14147,15 @@ data for dist_features_test_2700000_3563475 read
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>test_id</th>
-      <th>is_duplicate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>5</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>6</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>7</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>8</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>9</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>10</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>11</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>12</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>13</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>14</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>15</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>16</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>17</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>18</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>19</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>20</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>21</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>22</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>23</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>24</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>25</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>26</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>27</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>28</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>29</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>269970</th>
-      <td>269970</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269971</th>
-      <td>269971</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269972</th>
-      <td>269972</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269973</th>
-      <td>269973</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269974</th>
-      <td>269974</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269975</th>
-      <td>269975</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269976</th>
-      <td>269976</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269977</th>
-      <td>269977</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269978</th>
-      <td>269978</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269979</th>
-      <td>269979</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269980</th>
-      <td>269980</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269981</th>
-      <td>269981</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269982</th>
-      <td>269982</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269983</th>
-      <td>269983</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>269984</th>
-      <td>269984</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269985</th>
-      <td>269985</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269986</th>
-      <td>269986</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269987</th>
-      <td>269987</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269988</th>
-      <td>269988</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269989</th>
-      <td>269989</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269990</th>
-      <td>269990</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269991</th>
-      <td>269991</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269992</th>
-      <td>269992</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269993</th>
-      <td>269993</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269994</th>
-      <td>269994</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269995</th>
-      <td>269995</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269996</th>
-      <td>269996</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269997</th>
-      <td>269997</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>269998</th>
-      <td>269998</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269999</th>
-      <td>269999</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-<p>270000 rows × 2 columns</p>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>array([&#39;What is the step by step guide to invest in share market in india?&#39;,
+       &#39;What is the story of Kohinoor (Koh-i-Noor) Diamond?&#39;,
+       &#39;How can I increase the speed of my internet connection while using a VPN?&#39;,
+       ...,
+       &#34;How can Kaprekar&#39;s constant (6174) be proved using MS Excel?&#34;,
+       &#39;Is Hillary Clinton a dishonest candidate?&#39;,
+       &#39;What is it like to work at a mine in Australia?&#39;], dtype=object)</pre>
 </div>
 
 </div>
@@ -13590,56 +14166,82 @@ data for dist_features_test_2700000_3563475 read
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-<span class="nb">all</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/result_less.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)]</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[16]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[1, 2]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">drop</span> <span class="o">=</span> <span class="nb">all</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">([</span><span class="s1">&#39;test_id&#39;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span>
-<span class="n">drop</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/result_less.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;How can Kaprekar&#39;s constant !(1=1) (6174) be proved using MS Excel?&quot;</span>
+<span class="k">def</span> <span class="nf">lemmatize_all</span><span class="p">(</span><span class="n">sentence</span><span class="p">):</span>
+    <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">wnl</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">WordNetLemmatizer</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">nltk</span><span class="o">.</span><span class="n">pos_tag</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;NN&#39;</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">wnl</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;VB&#39;</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">wnl</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;JJ&#39;</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">wnl</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;R&#39;</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">wnl</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">word</span>
+
+<span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lemmatize_all</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">single</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">single</span> <span class="o">=</span> <span class="n">single</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">([</span><span class="s1">&#39;test_id&#39;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span>
-<span class="n">single</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/submission.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
+<div class="output_wrapper">
+<div class="output">
 
-    </div>
-</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[62]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#34;how can kaprekar &#39;s constant ! ( 1=1 ) ( 6174 ) be prove use ms excel ?&#34;</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
 
-    </div>
 </div>
 </div>
 

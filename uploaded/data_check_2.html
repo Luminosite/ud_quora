@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>test_data_process</title>
+<title>data_check_2</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13115,63 +13115,79 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">_pickle</span> <span class="k">as</span> <span class="nn">pk</span>
-<span class="n">clf</span> <span class="o">=</span> <span class="n">pk</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;gbdt.pickle&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">features</span> <span class="k">as</span> <span class="nn">ft</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">t_data</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">gen_transfered_dist_feature</span><span class="p">()[:</span><span class="mi">50000</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>S:\anaconda\envs\tf\lib\site-packages\gensim\utils.py:1197: UserWarning: detected Windows; aliasing chunkize to chunkize_serial
+  warnings.warn(&#34;detected Windows; aliasing chunkize to chunkize_serial&#34;)
+S:\anaconda\envs\tf\lib\site-packages\fuzzywuzzy\fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+  warnings.warn(&#39;Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning&#39;)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>read the data for transfered_dist_features_train
+data for transfered_dist_features_train read
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
 
-<span class="n">test_ranges</span> <span class="o">=</span> <span class="p">[</span>
-      <span class="p">(</span><span class="mi">0</span><span class="p">,</span>        <span class="mi">270000</span><span class="p">)</span>
-     <span class="p">,(</span><span class="mi">270000</span><span class="p">,</span>   <span class="mi">540000</span><span class="p">)</span>
-     <span class="p">,(</span><span class="mi">540000</span><span class="p">,</span>   <span class="mi">810000</span><span class="p">)</span>
-     <span class="p">,(</span><span class="mi">810000</span><span class="p">,</span>  <span class="mi">1800000</span><span class="p">)</span>
-<span class="c1">#     ,(1800000,  2700000)</span>
-    <span class="p">,(</span><span class="mi">2700000</span><span class="p">,</span>  <span class="mi">3563475</span><span class="p">)</span>
-<span class="p">]</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">SGDClassifier</span><span class="p">,</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="k">import</span> <span class="n">XGBClassifier</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="k">import</span> <span class="n">LGBMClassifier</span>
 
-<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;test_id&#39;</span><span class="p">,</span> <span class="s1">&#39;len_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_q2&#39;</span><span class="p">,</span> <span class="s1">&#39;diff_len&#39;</span><span class="p">,</span> <span class="s1">&#39;len_char_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_char_q2&#39;</span><span class="p">,</span> <span class="s1">&#39;len_word_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_word_q2&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;common_words&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_qratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_WRatio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_partial_ratio&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;fuzz_partial_token_set_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_partial_token_sort_ratio&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;fuzz_token_set_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_token_sort_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;wmd&#39;</span><span class="p">,</span> <span class="s1">&#39;norm_wmd&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;cosine_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;cityblock_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;jaccard_distance&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;canberra_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;euclidean_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;minkowski_distance&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;braycurtis_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;skew_q1vec&#39;</span><span class="p">,</span> <span class="s1">&#39;skew_q2vec&#39;</span><span class="p">,</span> <span class="s1">&#39;kur_q1vec&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;kur_q2vec&#39;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">log_loss</span>
+<span class="kn">import</span> <span class="nn">sklearn</span>
 
-<span class="n">model_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;len_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_q2&#39;</span><span class="p">,</span> <span class="s1">&#39;diff_len&#39;</span><span class="p">,</span> <span class="s1">&#39;len_char_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_char_q2&#39;</span><span class="p">,</span> <span class="s1">&#39;len_word_q1&#39;</span><span class="p">,</span> <span class="s1">&#39;len_word_q2&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;common_words&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_qratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_WRatio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_partial_ratio&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;fuzz_partial_token_set_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_partial_token_sort_ratio&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;fuzz_token_set_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fuzz_token_sort_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;wmd&#39;</span><span class="p">,</span> <span class="s1">&#39;norm_wmd&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;cosine_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;cityblock_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;jaccard_distance&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;canberra_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;euclidean_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;minkowski_distance&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;braycurtis_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;skew_q1vec&#39;</span><span class="p">,</span> <span class="s1">&#39;skew_q2vec&#39;</span><span class="p">,</span> <span class="s1">&#39;kur_q1vec&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;kur_q2vec&#39;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurtosis</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="k">import</span> <span class="n">cosine</span><span class="p">,</span> <span class="n">cityblock</span><span class="p">,</span> <span class="n">jaccard</span><span class="p">,</span> <span class="n">canberra</span><span class="p">,</span> <span class="n">euclidean</span><span class="p">,</span> <span class="n">minkowski</span><span class="p">,</span> <span class="n">braycurtis</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">mpatches</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="k">import</span> <span class="n">get_ipython</span>
 
-<span class="k">def</span> <span class="nf">prepare_test_data</span><span class="p">(</span><span class="n">data_tuple</span><span class="p">):</span>
-    <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">data_tuple</span>
-    <span class="n">t_data</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">gen_feature</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">data_file</span><span class="o">=</span><span class="s2">&quot;test.csv&quot;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">)</span>
-    
-    <span class="n">feature_data</span> <span class="o">=</span> <span class="n">t_data</span>
-    <span class="n">input_data</span> <span class="o">=</span> <span class="n">feature_data</span><span class="p">[</span><span class="n">model_features</span><span class="p">]</span>
-    <span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-    <span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;test_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_data</span><span class="p">[</span><span class="s1">&#39;test_id&#39;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">input_data</span>
+<span class="n">rand_number</span> <span class="o">=</span> <span class="mi">42</span>
 </pre></div>
 
     </div>
@@ -13181,16 +13197,102 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">cal_result</span><span class="p">(</span><span class="nb">tuple</span><span class="p">):</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">prepare_test_data</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">model_features</span><span class="p">])</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;test_id&#39;</span><span class="p">,</span> <span class="s1">&#39;is_duplicate&#39;</span><span class="p">]]</span>
-    <span class="k">return</span> <span class="n">result</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">one_hot</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="n">oc</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+    <span class="n">y_r</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">oc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">y_r</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">oc</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y_r</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">r</span>
 
-<span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">cal_result</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">test_ranges</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">get_log_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="n">y_p</span> <span class="o">=</span> <span class="n">one_hot</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">log_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_p</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">t_model</span><span class="p">(</span><span class="n">gbm</span><span class="p">):</span>
+    <span class="n">y_trainp</span> <span class="o">=</span> <span class="n">gbm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+    <span class="n">y_testp</span>  <span class="o">=</span> <span class="n">gbm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">get_log_loss</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_trainp</span><span class="p">),</span> <span class="n">get_log_loss</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_testp</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">tt_model</span><span class="p">(</span><span class="n">gbm</span><span class="p">):</span>
+    <span class="n">gbm</span> <span class="o">=</span> <span class="n">gbm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">t_model</span><span class="p">(</span><span class="n">gbm</span><span class="p">)</span>
+
+<span class="n">out_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;question1&#39;</span><span class="p">,</span> <span class="s1">&#39;question2&#39;</span><span class="p">,</span> <span class="s1">&#39;is_duplicate&#39;</span><span class="p">]</span>
+<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t_data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out_features</span><span class="p">]</span>
+
+<span class="n">t_data</span> <span class="o">=</span> <span class="n">t_data</span><span class="p">[</span><span class="n">t_data</span><span class="o">!=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">feature_data</span> <span class="o">=</span> <span class="n">t_data</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span>
+<span class="n">input_data</span> <span class="o">=</span> <span class="n">feature_data</span><span class="p">[</span><span class="n">features</span><span class="p">]</span>
+<span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">feature_data</span><span class="p">[[</span><span class="s1">&#39;is_duplicate&#39;</span><span class="p">]]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">time_cnt</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;func&quot;</span><span class="p">):</span>
+    <span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">f</span><span class="p">()</span>
+    <span class="n">t_end</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">t_used</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;function &#39;</span><span class="si">%s</span><span class="s2">&#39; use: </span><span class="si">%f</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">t_used</span><span class="p">))</span>
+    
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                                                    <span class="n">stratify</span> <span class="o">=</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># sorted(sklearn.metrics.SCORERS.keys())</span>
+<span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[30]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>((39809, 164), (9953, 164))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># base model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">num_thread</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">test_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13207,16 +13309,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>read the data for dist_features_test_0_270000
-data for dist_features_test_0_270000 read
-read the data for dist_features_test_270000_540000
-data for dist_features_test_270000_540000 read
-read the data for dist_features_test_540000_810000
-data for dist_features_test_540000_810000 read
-read the data for dist_features_test_810000_1800000
-data for dist_features_test_810000_1800000 read
-read the data for dist_features_test_2700000_3563475
-data for dist_features_test_2700000_3563475 read
+<pre>5.587422944138884 7.717697046345962
 </pre>
 </div>
 </div>
@@ -13227,10 +13320,30 @@ data for dist_features_test_2700000_3563475 read
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">GridSearchCV</span>
+<span class="n">params</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
+    <span class="s1">&#39;num_leaves&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># params = {</span>
+<span class="c1">#               &#39;max_depth&#39;: [15, 20, 25, 30, 35],</span>
+<span class="c1">#               &#39;learning_rate&#39;: [0.01, 0.02, 0.05, 0.1, 0.15],</span>
+<span class="c1">#               &#39;feature_fraction&#39;: [0.6, 0.7, 0.8, 0.9, 0.95],</span>
+<span class="c1">#               &#39;bagging_fraction&#39;: [0.6, 0.7, 0.8, 0.9, 0.95],</span>
+<span class="c1">#               &#39;bagging_freq&#39;: [2, 4, 5, 6, 8],</span>
+<span class="c1">#               &#39;lambda_l1&#39;: [0, 0.1, 0.4, 0.5, 0.6],</span>
+<span class="c1">#               &#39;lambda_l2&#39;: [0, 10, 15, 35, 40],</span>
+<span class="c1">#               &#39;cat_smooth&#39;: [1, 10, 15, 20, 35]</span>
+<span class="c1"># }</span>
+<span class="n">gbm</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">num_thread</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">gsearch1</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">gbm</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_log_loss&#39;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">gsearch1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_params_</span><span class="p">,</span> <span class="n">gsearch1</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13243,345 +13356,36 @@ data for dist_features_test_2700000_3563475 read
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[37]:</div>
+    <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>test_id</th>
-      <th>is_duplicate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>5</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>6</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>7</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>8</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>9</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>10</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>11</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>12</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>13</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>14</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>15</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>16</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>17</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>18</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>19</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>20</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>21</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>22</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>23</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>24</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>25</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>26</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>27</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>28</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>29</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>269970</th>
-      <td>269970</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269971</th>
-      <td>269971</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269972</th>
-      <td>269972</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269973</th>
-      <td>269973</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269974</th>
-      <td>269974</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269975</th>
-      <td>269975</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269976</th>
-      <td>269976</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269977</th>
-      <td>269977</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269978</th>
-      <td>269978</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269979</th>
-      <td>269979</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269980</th>
-      <td>269980</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269981</th>
-      <td>269981</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269982</th>
-      <td>269982</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269983</th>
-      <td>269983</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>269984</th>
-      <td>269984</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269985</th>
-      <td>269985</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269986</th>
-      <td>269986</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269987</th>
-      <td>269987</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269988</th>
-      <td>269988</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269989</th>
-      <td>269989</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269990</th>
-      <td>269990</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269991</th>
-      <td>269991</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269992</th>
-      <td>269992</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269993</th>
-      <td>269993</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269994</th>
-      <td>269994</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269995</th>
-      <td>269995</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269996</th>
-      <td>269996</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269997</th>
-      <td>269997</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>269998</th>
-      <td>269998</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>269999</th>
-      <td>269999</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-<p>270000 rows × 2 columns</p>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fitting 3 folds for each of 15 candidates, totalling 45 fits
+</pre>
 </div>
 </div>
 
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Parallel(n_jobs=3)]: Using backend LokyBackend with 3 concurrent workers.
+[Parallel(n_jobs=3)]: Done  45 out of  45 | elapsed:  2.4min finished
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;max_depth&#39;: 20, &#39;num_leaves&#39;: 50} -0.4357211897392911
+</pre>
+</div>
 </div>
 
 </div>
@@ -13590,43 +13394,419 @@ data for dist_features_test_2700000_3563475 read
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-<span class="nb">all</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/result_less.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">best</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">num_thread</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">tt_model</span><span class="p">(</span><span class="n">best</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>4.390985639796101 7.502545420053944
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">drop</span> <span class="o">=</span> <span class="nb">all</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">([</span><span class="s1">&#39;test_id&#39;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span>
-<span class="n">drop</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/result_less.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">params</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+    <span class="s1">&#39;bagging_freq&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">70</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">gbm</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="n">gsearch1</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">gbm</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_log_loss&#39;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">gsearch1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_params_</span><span class="p">,</span> <span class="n">gsearch1</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="n">t_model</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fitting 3 folds for each of 20 candidates, totalling 60 fits
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Parallel(n_jobs=3)]: Using backend LokyBackend with 3 concurrent workers.
+[Parallel(n_jobs=3)]: Done  44 tasks      | elapsed:  1.2min
+[Parallel(n_jobs=3)]: Done  60 out of  60 | elapsed:  1.6min finished
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;bagging_freq&#39;: 20, &#39;learning_rate&#39;: 0.1} -0.4357211897392911
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">single</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">single</span> <span class="o">=</span> <span class="n">single</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">([</span><span class="s1">&#39;test_id&#39;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span>
-<span class="n">single</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/submission.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">params</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;bagging_freq&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">gbm</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">gsearch1</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">gbm</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_log_loss&#39;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">gsearch1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_params_</span><span class="p">,</span> <span class="n">gsearch1</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="n">t_model</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fitting 3 folds for each of 4 candidates, totalling 12 fits
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Parallel(n_jobs=3)]: Using backend LokyBackend with 3 concurrent workers.
+[Parallel(n_jobs=3)]: Done  12 out of  12 | elapsed:   18.8s finished
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;bagging_freq&#39;: 15} -0.4357211897392911
+4.390985639796101 7.502545420053944
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">params</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;lambda_l1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span>
+    <span class="s1">&#39;lambda_l2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">gbm</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">gsearch1</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">gbm</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_log_loss&#39;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">gsearch1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_params_</span><span class="p">,</span> <span class="n">gsearch1</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="n">t_model</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fitting 3 folds for each of 25 candidates, totalling 75 fits
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Parallel(n_jobs=3)]: Using backend LokyBackend with 3 concurrent workers.
+[Parallel(n_jobs=3)]: Done  44 tasks      | elapsed:  1.3min
+[Parallel(n_jobs=3)]: Done  75 out of  75 | elapsed:  2.1min finished
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;lambda_l1&#39;: 0.4, &#39;lambda_l2&#39;: 10} -0.43348030064365295
+4.724148747024257 7.426201294595485
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">params</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;lambda_l1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.33</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.38</span><span class="p">],</span>
+    <span class="s1">&#39;lambda_l2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">gbm</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">gsearch1</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">gbm</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_log_loss&#39;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">gsearch1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_params_</span><span class="p">,</span> <span class="n">gsearch1</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="n">t_model</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fitting 3 folds for each of 12 candidates, totalling 36 fits
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Parallel(n_jobs=3)]: Using backend LokyBackend with 3 concurrent workers.
+[Parallel(n_jobs=3)]: Done  36 out of  36 | elapsed:  1.1min finished
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;lambda_l1&#39;: 0.3, &#39;lambda_l2&#39;: 8} -0.4330621949635189
+4.574919438578312 7.297804356324441
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">params</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;feature_fraction&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">],</span>
+    <span class="s1">&#39;bagging_fraction&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">],</span>
+<span class="c1">#     &#39;cat_smooth&#39;: [1, 10, 15, 20, 35]</span>
+<span class="p">}</span>
+<span class="n">gbm</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">lambda_l1</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">lambda_l2</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">gsearch1</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">gbm</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_log_loss&#39;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">gsearch1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_params_</span><span class="p">,</span> <span class="n">gsearch1</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="n">t_model</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fitting 3 folds for each of 25 candidates, totalling 75 fits
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Parallel(n_jobs=3)]: Using backend LokyBackend with 3 concurrent workers.
+S:\anaconda\envs\tf\lib\site-packages\sklearn\externals\joblib\externals\loky\process_executor.py:706: UserWarning: A worker stopped while some jobs were given to the executor. This can be caused by a too short worker timeout or by a memory leak.
+  &#34;timeout or by a memory leak.&#34;, UserWarning
+[Parallel(n_jobs=3)]: Done  44 tasks      | elapsed:  1.2min
+[Parallel(n_jobs=3)]: Done  75 out of  75 | elapsed:  2.0min finished
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;bagging_fraction&#39;: 0.6, &#39;feature_fraction&#39;: 0.6} -0.43298128261992097
+4.764058910910964 7.474783919887232
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">params</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;cat_smooth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">gbm</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">lambda_l1</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">lambda_l2</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">gsearch1</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">gbm</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_log_loss&#39;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">gsearch1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_params_</span><span class="p">,</span> <span class="n">gsearch1</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="n">t_model</span><span class="p">(</span><span class="n">gsearch1</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fitting 3 folds for each of 7 candidates, totalling 21 fits
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Parallel(n_jobs=3)]: Using backend LokyBackend with 3 concurrent workers.
+[Parallel(n_jobs=3)]: Done  21 out of  21 | elapsed:   48.9s finished
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;cat_smooth&#39;: 0.1} -0.4330621949635189
+4.574919438578312 7.297804356324441
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
