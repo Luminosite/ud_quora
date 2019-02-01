@@ -353,12 +353,8 @@ def prepare_vec_dist_data(data, vec, tag="tag"):
     return attached
 
 
-def transfer_vec_cal_dist(data):
+def transfer_vec_cal_dist(data, ms):
     tfidf = tfidf_gen(data)
-    ms = [
-        (TruncatedSVD, [300, 25]),
-        (NMF, [30])
-    ]
 
     for model_func, n_list in ms:
         for n in n_list:
@@ -371,12 +367,27 @@ def transfer_vec_cal_dist(data):
     return data
 
 
-def transferred_dist_feature(data):
+def svd300(d):
+    return transfer_vec_cal_dist(d, (TruncatedSVD, [300]))
+def svd300_feature(data):
     data_block_number = int( (data.shape[0]-1) / block_size ) + 1
-    process_data(transfer_vec_cal_dist, data, n=2, tag='topic model', data_n=data_block_number)
+    process_data(svd300, data, n=2, tag='topic model', data_n=data_block_number)
+    return data
+
+def svd25(d):
+    return transfer_vec_cal_dist(d, (TruncatedSVD, [25]))
+def svd25_feature(data):
+    data_block_number = int( (data.shape[0]-1) / block_size ) + 1
+    process_data(svd25, data, n=2, tag='topic model', data_n=data_block_number)
     return data
 
 
+def nmf30(d):
+    return transfer_vec_cal_dist(d, (NMF, [30]))
+def nmf30_feature(data):
+    data_block_number = int( (data.shape[0]-1) / block_size ) + 1
+    process_data(nmf30, data, n=2, tag='topic model', data_n=data_block_number)
+    return data
 ###################################################################
 # local word2vec distance
 ###################################################################
@@ -455,7 +466,9 @@ operations = [
     , ("norm_wmd_feature_", norm_wmd_feature)
     , ("dist_features_", dist_features)
     , ("common_ratio_features_", common_ratio_feature)
-    , ("transfered_dist_features_", transferred_dist_feature)
+    , ("svd300_features_", svd300_feature)
+    , ("svd25_features_", svd25_feature)
+    , ("nmf30_features_", nmf30_feature)
     , ("local_vec_", local_vec_feature)
     , ("pos_vec_", pos_vec_feature)
 ]
@@ -475,4 +488,8 @@ def feature_generation(n=0, data_file="train.csv", start=0, operation_list=opera
 
 
 def gen_transferred_dist_feature(n=0, data_file="train.csv", start=0):
-    return feature_generation(n=n, data_file=data_file, start=start, operation_list=operations[:6])
+    return feature_generation(n=n, data_file=data_file, start=start, operation_list=operations[:8])
+
+
+def gen_n_feature(n=0, data_file="train.csv", start=0, nf=10):
+    return feature_generation(n=n, data_file=data_file, start=start, operation_list=operations[:nf])
