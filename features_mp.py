@@ -317,13 +317,19 @@ def tfidf_gen(t_data):
 
 
 def attach_vec_directly(data, q1, q2, tag):
+    # print("attach head:", data.shape, q1.shape, q2.shape)
     width = int(q1.shape[1])
     short_tag = tag.replace(' ', '')
     cols = [["q{i}_{s}_{sub_num}".format(i=i, s=short_tag, sub_num=x) for x in range(width)] for i in range(1, 3)]
     print("to attach cols:", cols)
+    
     dq1 = pd.DataFrame(q1, columns=cols[0])
     dq2 = pd.DataFrame(q2, columns=cols[1])
-    return pd.concat([data, dq1, dq2], axis=1)
+    # print("to attach", data.shape, dq1.shape, dq2.shape)
+    re_index_data = data.reset_index(drop=True)
+    ret = pd.concat((re_index_data, dq1, dq2), axis=1)
+    # print("attach ret", ret.shape, data.shape, dq1.shape, dq2.shape)
+    return ret
 
 
 def prepare_vec_dist_data(data, vec, tag="tag"):
@@ -337,10 +343,12 @@ def prepare_vec_dist_data(data, vec, tag="tag"):
     
     attached = dist_features_data
     if q1.shape[1] < 50:
+        print("before attach for %s" % tag, dist_features_data.shape)
         attached = attach_vec_directly(dist_features_data, q1, q2, tag)
+        print("after attach for %s" % tag, attached.shape)
     return attached
 
-
+ 
 def transfer_vec_cal_dist(data, ms):
     tfidf = tfidf_gen(data)
 
@@ -361,7 +369,6 @@ def svd300(d):
 
 def svd300_feature(data):
     data_block_number = int((data.shape[0]-1) / block_size) + 1
-    print("dd", data_block_number)
     data = process_data(svd300, data, n=2, tag='topic model', data_n=data_block_number)
     return data
 
@@ -390,8 +397,8 @@ def nmf30_feature(data):
 # local word2vec distance
 ###################################################################
 def get_words(data):
-    w1 = [s.split(' ') for s in data['question1'].values]
-    w2 = [s.split(' ') for s in data['question2'].values]
+    w1 = data['question1'].apply(lambda x: str(x).split()) #  [s.split(' ') for s in str(data['question1'].values)]
+    w2 = data['question2'].apply(lambda x: str(x).split()) #  [s.split(' ') for s in str(data['question2'].values)]
     return w1, w2
 
 
@@ -420,6 +427,7 @@ def local_vec(data):
 
 def local_vec_feature(data):
     data_block_number = int((data.shape[0]-1) / block_size) + 1
+    print("block num for loc vec", data_block_number, data.shape[0])
     data = process_data(local_vec, data, n=4, tag='local word2vec', data_n=data_block_number)
     return data
 
@@ -445,7 +453,8 @@ def attach_vec_with_tags(data, q1, q2, tags):
     print("to attach cols:", cols)
     dq1 = pd.DataFrame(q1, columns=cols[0])
     dq2 = pd.DataFrame(q2, columns=cols[1])
-    return pd.concat([data, dq1, dq2], axis=1)
+    re_index = data.reset_index(drop=True)
+    return pd.concat([re_index, dq1, dq2], axis=1)
 
 
 def pos_vec(data):
