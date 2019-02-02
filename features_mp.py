@@ -467,8 +467,8 @@ def pos_vec(data):
 
 
 def pos_vec_feature(data):
-    data_block_number = int((data.shape[0]-1) / block_size) + 1
-    data = process_data(pos_vec, data, n=8, tag='pos vec', data_n=data_block_number)
+    # data_block_number = int((data.shape[0]-1) / block_size) + 1
+    data = process_data(pos_vec, data, n=8, tag='pos vec') #, data_n=data_block_number)
     return data
 ###################################################################
 # graph feature
