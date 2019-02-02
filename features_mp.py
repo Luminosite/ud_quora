@@ -344,14 +344,14 @@ def prepare_vec_dist_data(data, vec, tag="tag"):
 def transfer_vec_cal_dist(data, ms):
     tfidf = tfidf_gen(data)
 
-    for model_func, n_list in ms:
-        for n in n_list:
-            tag = "%s_%d" % (model_func.__name__, n)
-            print("transfer sparse vec for %s" % tag)
-            model = model_func(n_components=n)
-            transferred = model.fit_transform(tfidf)
-            print("prepare features for %s" % tag)
-            data = prepare_vec_dist_data(data, transferred, tag=tag)
+    model_func, n_list = ms
+    for n in n_list:
+        tag = "%s_%d" % (model_func.__name__, n)
+        print("transfer sparse vec for %s" % tag)
+        model = model_func(n_components=n)
+        transferred = model.fit_transform(tfidf)
+        print("prepare features for %s" % tag)
+        data = prepare_vec_dist_data(data, transferred, tag=tag)
     return data
 
 
@@ -361,7 +361,8 @@ def svd300(d):
 
 def svd300_feature(data):
     data_block_number = int((data.shape[0]-1) / block_size) + 1
-    process_data(svd300, data, n=2, tag='topic model', data_n=data_block_number)
+    print("dd", data_block_number)
+    data = process_data(svd300, data, n=2, tag='topic model', data_n=data_block_number)
     return data
 
 
@@ -371,7 +372,7 @@ def svd25(d):
 
 def svd25_feature(data):
     data_block_number = int((data.shape[0]-1) / block_size) + 1
-    process_data(svd25, data, n=2, tag='topic model', data_n=data_block_number)
+    data = process_data(svd25, data, n=2, tag='topic model', data_n=data_block_number)
     return data
 
 
@@ -381,7 +382,7 @@ def nmf30(d):
 
 def nmf30_feature(data):
     data_block_number = int((data.shape[0]-1) / block_size) + 1
-    process_data(nmf30, data, n=2, tag='topic model', data_n=data_block_number)
+    data = process_data(nmf30, data, n=2, tag='topic model', data_n=data_block_number)
     return data
 
 
@@ -419,7 +420,7 @@ def local_vec(data):
 
 def local_vec_feature(data):
     data_block_number = int((data.shape[0]-1) / block_size) + 1
-    process_data(local_vec, data, n=4, tag='local word2vec', data_n=data_block_number)
+    data = process_data(local_vec, data, n=4, tag='local word2vec', data_n=data_block_number)
     return data
 
 
@@ -439,17 +440,26 @@ def get_pos_vec(sentence):
     return [dic[x] for x in pos_features]
 
 
+def attach_vec_with_tags(data, q1, q2, tags):
+    cols = [["q{i}_{t}".format(i=i, t=short_tag) for short_tag in tags] for i in range(1, 3)]
+    print("to attach cols:", cols)
+    dq1 = pd.DataFrame(q1, columns=cols[0])
+    dq2 = pd.DataFrame(q2, columns=cols[1])
+    return pd.concat([data, dq1, dq2], axis=1)
+
+
 def pos_vec(data):
     print("process pos vec features for", pos_features)
-    q1 = data['question1'].apply(lambda x: get_pos_vec(str(x)))
-    q2 = data['question2'].apply(lambda x: get_pos_vec(str(x)))
+    q1 = data['question1'].apply(lambda x: get_pos_vec(str(x))).values.tolist()
+    q2 = data['question2'].apply(lambda x: get_pos_vec(str(x))).values.tolist()
 
-    return dist_features_for(data, q1, q2, tag='pos_vec_distance')
+    data = dist_features_for(data, q1, q2, tag='pos_vec')
+    return attach_vec_with_tags(data, q1, q2, pos_features)
 
 
 def pos_vec_feature(data):
     data_block_number = int((data.shape[0]-1) / block_size) + 1
-    process_data(pos_vec, data, n=8, tag='pos vec', data_n=data_block_number)
+    data = process_data(pos_vec, data, n=8, tag='pos vec', data_n=data_block_number)
     return data
 ###################################################################
 # graph feature

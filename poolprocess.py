@@ -5,7 +5,8 @@ import numpy as np
 
 
 def process_data(func, data, n, tag, data_n=-1):
-    data_block_num = n if data_n < n else data_n
+    n = n if data_n == -1 or data_n >= n else data_n
+    data_block_num = n if data_n == -1 else data_n
     print("process %s starts with %d processes %d jobs" % (tag, n, data_block_num))
 
     t_start = time.time()
@@ -17,7 +18,6 @@ def process_data(func, data, n, tag, data_n=-1):
         part = data[i*block_len: (i+1)*block_len].copy()
         data_list.append(part)
 
-    print('data list size:', len(data_list))
     pool = Pool(n)
     ret = pool.map(func, data_list)
     pool.close()
